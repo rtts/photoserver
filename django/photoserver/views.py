@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 
+@login_required
 @require_http_methods(['POST'])
 def create_album(request):
     '''
@@ -26,6 +28,7 @@ def create_album(request):
     #TODO: Implement this view
     pass;
 
+@login_required
 @require_http_methods(['POST'])
 def create_photo(request):
     '''
@@ -46,6 +49,7 @@ def create_photo(request):
     #TODO: Implement this view
     pass;
 
+@login_required
 @require_http_methods(['PUT', 'DELETE'])
 def update_delete_photo(request, album_id, photo_id):
     if request.method == 'PUT':
@@ -67,7 +71,6 @@ def update_photo(request, album_id, photo_id):
     '''
     #TODO: Implement this view
     pass;
-
 
 
 def delete_photo(request, album_id, photo_id):
