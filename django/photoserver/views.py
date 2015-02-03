@@ -55,7 +55,7 @@ def create_album(request):
 
     album.save()
     return JsonResponse({
-        'albumId': album.album_id(),
+        'albumId': album.album_id,
         'albumUrl': album.album_url,
         })
 
