@@ -8,6 +8,7 @@ class PhotoAdmin(admin.TabularInline):
 @admin.register(Album)
 class AlbumAdmin(admin.ModelAdmin):
     actions = None
-    list_display = ('album_id', 'game_name', 'nr_of_photos')
-    fields = ('game_name', 'partner_name', 'game_id')
+    list_display = ('album_id', 'album_url', 'game_name', 'nr_of_photos', )
+    list_filter = ('partner_name', )
+    fields = ('game_name', 'partner_name', 'game_id', )
     inlines = [PhotoAdmin]

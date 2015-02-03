@@ -11,7 +11,7 @@ def random_string(length):
 
 def photo_location(obj, filename):
     """Returns a photo's upload location"""
-    return '/'.join([obj.album.album_id(), random_string(PHOTO_FILENAME_LENGTH) + '.jpg'])
+    return '/'.join([obj.album.album_id, random_string(PHOTO_FILENAME_LENGTH) + '.jpg'])
 
 class Album(models.Model):
     """A photo album"""
@@ -20,24 +20,20 @@ class Album(models.Model):
     game_name = models.CharField(max_length=255)
     partner_name = models.SlugField()
     game_id = models.IntegerField()
-    album_url = models.CharField(max_length=ALBUM_URL_LENGTH, blank=True)
-
-    def album_id(self):
-        """Returns the album id"""
-        return self.partner_name + str(self.game_id)
+    album_id = models.CharField(max_length=255, blank=True)
+    album_url = models.CharField(max_length=255, default=random_string(ALBUM_URL_LENGTH))
 
     def nr_of_photos(self):
         """Returns the number of photos"""
         return self.photos.count()
 
     def save(self, *args, **kwargs):
-        """Overrides the save method to generate a random album URL'"""
-        if self.pk is None:
-            self.album_url = random_string(ALBUM_URL_LENGTH)
+        """Overrides the save method to generate an album id"""
+        self.album_id = self.partner_name + str(self.game_id)
         super(Album, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.album_id()
+        return self.album_id
 
     class Meta:
         unique_together = ('partner_name', 'game_id')

@@ -1,8 +1,22 @@
-from django.shortcuts import render
+import json
+import base64
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.core.files.base import ContentFile
+from .utils import http_auth_required
+from .models import Album, Photo
 
-@login_required
+HTTP_AUTH_REALM = "Photoserver-API"
+ERROR_JSON = 'You are sending invalid JSON! The exact error is: "{}"'
+ERROR_KEY = 'The request doesn’t contain the required arguments. At least the following key is missing: {}'
+ERROR_BASE64 = 'The Jpeg data couldn’t be decoded using base64. The exact error is: "{}"'
+ERROR_JPG = 'The image you supplied is not a valid image. Is the Jpeg data corrupted?'
+
+@csrf_exempt
+@http_auth_required(realm=HTTP_AUTH_REALM)
 @require_http_methods(['POST'])
 def create_album(request):
     '''
@@ -25,10 +39,28 @@ def create_album(request):
     200 OK
     '''
 
-    #TODO: Implement this view
-    pass;
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+    except ValueError as e:
+        return HttpResponseBadRequest(ERROR_JSON.format(e))
 
-@login_required
+    try:
+        album = Album(
+            game_name = data['gameName'],
+            partner_name = data['partnerName'],
+            game_id = data['gameId'],
+        )
+    except KeyError as e:
+        return HttpResponseBadRequest(ERROR_KEY.format(e))
+
+    album.save()
+    return JsonResponse({
+        'albumId': album.album_id(),
+        'albumUrl': album.album_url,
+        })
+
+@csrf_exempt
+@http_auth_required(realm=HTTP_AUTH_REALM)
 @require_http_methods(['POST'])
 def create_photo(request):
     '''
@@ -37,19 +69,49 @@ def create_photo(request):
     Input:
     ------
     - string albumId
-    - string name of the photo
-    - string comment on the photo
-    - the jpg data itself, typically 640x400 so approx. 100 kByte.
+    - string comment (optional)
+    - base64 encoded string jpgData
+
     Returns: { photoId:.., photoUrl:..}
     --------
-    - photoId: The photoId
     - photoUrl: The full URL of the full sized photo picture in the album
     '''
 
-    #TODO: Implement this view
-    pass;
+    # Cautiously extract and decode request data
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+    except ValueError as e:
+        return HttpResponseBadRequest(ERROR_JSON.format(e))
+    try:
+        album = get_object_or_404(Album, album_id=data['albumId'])
+        encoded_jpg = data['jpgData']
+    except KeyError as e:
+        return HttpResponseBadRequest(ERROR_KEY.format(e))
+    try:
+        decoded_jpg = base64.b64decode(data['jpgData'], validate=True)
+    except Exception as e:
+        return HttpResponseBadRequest(ERROR_BASE64.format(e))
 
-@login_required
+    # Create and validate the photo object
+    photo = Photo(
+        album = album,
+        source = ContentFile(decoded_jpg, 'ignoredfilename.jpg'),
+    )
+    try:
+        photo.source.width; # triggers the image validation
+    except TypeError:
+        return HttpResponseBadRequest(ERROR_JPG)
+
+    # Save photo to database and return successfully
+    if 'comment' in data:
+        photo.comment = data['comment']
+    photo.save()
+    return JsonResponse({
+        'photoUrl': photo.source.url,
+        })
+
+@csrf_exempt
+@http_auth_required(realm=HTTP_AUTH_REALM)
 @require_http_methods(['PUT', 'DELETE'])
 def update_delete_photo(request, album_id, photo_id):
     if request.method == 'PUT':
@@ -72,7 +134,6 @@ def update_photo(request, album_id, photo_id):
     #TODO: Implement this view
     pass;
 
-
 def delete_photo(request, album_id, photo_id):
     '''
     Delete Photo DELETE album/<albumID>/photo/<photoID>
@@ -87,9 +148,8 @@ def delete_photo(request, album_id, photo_id):
     #TODO: Implement this view
     pass;
 
-
 @require_http_methods(['GET'])
-def view_album(request, album_id):
+def view_album(request, album_url):
     '''
     Viewer page (URL from create Album above)
     =========================================
@@ -101,5 +161,16 @@ def view_album(request, album_id):
     - Download all photo’s in a ZIP (typically 4 Mbyte, Max 20 Mbyte)
     '''
 
-    #TODO: Implement this view
-    pass;
+    album = get_object_or_404(Album, album_url=album_url)
+    return HttpResponse("You've requested the album " + str(album))
+
+
+
+
+
+
+
+
+
+
+

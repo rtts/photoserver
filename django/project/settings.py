@@ -28,6 +28,7 @@ BASE_DIR         = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_DEBUG   = DEBUG
 ALLOWED_HOSTS    = ['localhost', 'photoserver.created.today']
 ROOT_URLCONF     = 'project.urls'
+LOGIN_URL        = 'admin:login'
 WSGI_APPLICATION = 'project.wsgi.application'
 STATIC_ROOT      = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'files'),)
