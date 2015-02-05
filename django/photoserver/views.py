@@ -1,3 +1,7 @@
+"""
+This module implements the API calls. The API documentation is available at either doc/index.rst or static/doc/html/index.html
+"""
+
 import json
 import base64
 from django.shortcuts import render, get_object_or_404
@@ -14,30 +18,13 @@ ERROR_JSON = 'You are sending invalid JSON! The exact error is: "{}"'
 ERROR_KEY = 'The request doesn’t contain the required arguments. At least the following key is missing: {}'
 ERROR_BASE64 = 'The Jpeg data couldn’t be decoded using base64. The exact error is: "{}"'
 ERROR_JPG = 'The image you supplied is not a valid image. Is the Jpeg data corrupted?'
+ERROR_409 = "The specified album already exists."
 
 @csrf_exempt
 @http_auth_required(realm=HTTP_AUTH_REALM)
 @require_http_methods(['POST'])
 def create_album(request):
-    '''
-    Create album POST /album/
-    ============
-
-    Input: {gameName:.., partnerName:.. gameId:..}
-    ------
-    - string gameName e.g. "erfenis -  Fam. van Damme", used for the title of the album
-    - string partnerName e.g. "uitjes", used to generate unique id
-    - String gameId bijv "870", could be used with previous field to generate unique id
-
-    Returns: {albumId:.., albumUrl:..}
-    --------
-    - String albumId: identifier of this album
-    - String albumUrl: URL of the album, including some generated password so that only people with the link can see the album using a browser
-
-    Status code:
-    -------
-    200 OK
-    '''
+    """Create a new photo album"""
 
     try:
         data = json.loads(request.body.decode('utf-8'))
@@ -45,7 +32,7 @@ def create_album(request):
         return HttpResponseBadRequest(ERROR_JSON.format(e))
 
     try:
-        album = Album(
+        album, is_new = Album.objects.get_or_create(
             game_name = data['gameName'],
             partner_name = data['partnerName'],
             game_id = data['gameId'],
@@ -53,29 +40,16 @@ def create_album(request):
     except KeyError as e:
         return HttpResponseBadRequest(ERROR_KEY.format(e))
 
-    album.save()
     return JsonResponse({
         'albumId': album.album_id,
         'albumUrl': album.album_url,
-        })
+        }, status=(200 if is_new else 409))
 
 @csrf_exempt
 @http_auth_required(realm=HTTP_AUTH_REALM)
 @require_http_methods(['POST'])
 def create_photo(request):
-    '''
-    Create Photo POST /photo/
-    ====================
-    Input:
-    ------
-    - string albumId
-    - string comment (optional)
-    - base64 encoded string jpgData
-
-    Returns: { photoId:.., photoUrl:..}
-    --------
-    - photoUrl: The full URL of the full sized photo picture in the album
-    '''
+    """Add a new photo to an album"""
 
     # Cautiously extract and decode request data
     try:
@@ -113,64 +87,41 @@ def create_photo(request):
 @csrf_exempt
 @http_auth_required(realm=HTTP_AUTH_REALM)
 @require_http_methods(['PUT', 'DELETE'])
-def update_delete_photo(request, album_id, photo_id):
+def update_delete_photo(request, photo_url):
     if request.method == 'PUT':
-        return update_photo(request, album_id, photo_id)
+        return update_photo(request, photo_url)
     elif request.method == 'DELETE':
-        return delete_photo(request, album_id, photo_id)
+        return delete_photo(request, photo_url)
 
-def update_photo(request, album_id, photo_id):
-    '''
-    Change comment on photo (PUT album/<albumID>/photo/<photoId>
-    =======================
-    Input: { comment: .. }
-    ------
-    - photoId from the PUT command
-    - The new comment
-    Returns:
-    --------
-    Status code
-    '''
-    #TODO: Implement this view
-    pass;
+def update_photo(request, photo_url):
+    """Update the comment on an existing photo"""
 
-def delete_photo(request, album_id, photo_id):
-    '''
-    Delete Photo DELETE album/<albumID>/photo/<photoID>
-    ===================================================
-    Input:
-    ------
-    Returns:
-    --------
-    Status code
-    '''
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+    except ValueError as e:
+        return HttpResponseBadRequest(ERROR_JSON.format(e))
+    try:
+        comment = data['comment']
+    except KeyError as e:
+        return HttpResponseBadRequest(ERROR_KEY.format(e))
 
-    #TODO: Implement this view
-    pass;
+    photo = get_object_or_404(Photo, source=photo_url)
+    photo.comment = comment
+    photo.save()
+
+    return HttpResponse()
+
+def delete_photo(request, photo_url):
+    """Delete a photo"""
+
+    photo = get_object_or_404(Photo, source=photo_url)
+    photo.delete()
+
+    return HttpResponse()
 
 @require_http_methods(['GET'])
 def view_album(request, album_url):
-    '''
-    Viewer page (URL from create Album above)
-    =========================================
-    HTTP GET URL (e.g. http://albums.elibom.nl/album/<difficult to guess albumID>
-
-    - Shows overview of all photo’s in the album.
-    - Clicking a photo shows the photo with next/prev
-    - Shows comment of the photo
-    - Download all photo’s in a ZIP (typically 4 Mbyte, Max 20 Mbyte)
-    '''
+    """View an existing photo album in a web browser"""
 
     album = get_object_or_404(Album, album_url=album_url)
     return HttpResponse("You've requested the album " + str(album))
-
-
-
-
-
-
-
-
-
-
-

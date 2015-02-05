@@ -7,7 +7,7 @@ from photoserver import views
 urlpatterns = [
     url(r'^album/$', views.create_album),
     url(r'^photo/$', views.create_photo),
-    url(r'^album/([^/]+)/photo/([^/]+)/$', views.update_delete_photo),
+    url(r'^photo/([^/]+/[^/]+)$', views.update_delete_photo),
     url(r'^album/([^/]+)/$', views.view_album),
     url(r'^admin/', include(admin.site.urls)),
 ]

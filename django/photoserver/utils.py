@@ -1,4 +1,5 @@
 import base64
+from functools import wraps
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 
@@ -27,6 +28,7 @@ def http_auth(view, request, realm='', *args, **kwargs):
 def http_auth_required(realm=''):
     """Decorator that requires HTTP Basic authentication, eg API views."""
     def view_decorator(func):
+        @wraps(func)
         def wrapper(request, *args, **kwargs):
             return http_auth(func, request, realm, *args, **kwargs)
         return wrapper

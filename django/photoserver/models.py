@@ -1,6 +1,8 @@
 import random
 import string
 from django.db import models
+from django.core.urlresolvers import reverse
+from django.conf import settings
 
 ALBUM_URL_LENGTH = 32
 PHOTO_FILENAME_LENGTH = 32
@@ -26,6 +28,10 @@ class Album(models.Model):
     def nr_of_photos(self):
         """Returns the number of photos"""
         return self.photos.count()
+
+    def get_absolute_url(self):
+        """Returns the album URL"""
+        return reverse('photoserver.views.view_album', args=[self.album_url])
 
     def save(self, *args, **kwargs):
         """Overrides the save method to generate an album id"""
