@@ -124,4 +124,8 @@ def view_album(request, album_url):
     """View an existing photo album in a web browser"""
 
     album = get_object_or_404(Album, album_url=album_url)
-    return HttpResponse("You've requested the album " + str(album))
+    #return HttpResponse("You've requested the album " + str(album))
+    return render(request, 'index.html', {
+        'game_name': album.game_name,
+        'items': album.photos.all(),
+        })
