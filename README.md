@@ -15,11 +15,13 @@
 ### Additional documentation
 
 The photo server API calls are well-documented. To build the
-documentation will need the Sphinx documentation builder and the
-sphinxcontrib.httpdomain extension. Install both with the following
-command: `pip install sphinx sphinxcontrib-httpdomain`. Now cd into
-the `doc` directory and type `make html`. If the development server is
-still running, the API documentation can now be accessed at
+documentation will need the [Sphinx](http://sphinx-doc.org/)
+documentation builder and the
+[sphinxcontrib.httpdomain](http://pythonhosted.org/sphinxcontrib-httpdomain/)
+extension. Install both with the following command: `pip install
+sphinx sphinxcontrib-httpdomain`. Now cd into the `doc` directory and
+type `make html`. If the development server is still running, the API
+documentation can now be accessed at
 http://localhost:8000/static/doc/html/index.html
 
 ### Deployment
