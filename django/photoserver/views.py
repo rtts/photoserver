@@ -2,14 +2,20 @@
 This module implements the API calls. The API documentation is available at either doc/index.rst or static/doc/html/index.html
 """
 
+import os
+import io
 import json
 import base64
+import zipfile
+
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.base import ContentFile
+from django.conf import settings
+
 from .utils import http_auth_required
 from .models import Album, Photo
 
@@ -124,8 +130,33 @@ def view_album(request, album_url):
     """View an existing photo album in a web browser"""
 
     album = get_object_or_404(Album, album_url=album_url)
-    #return HttpResponse("You've requested the album " + str(album))
+
     return render(request, 'index.html', {
         'game_name': album.game_name,
         'items': album.photos.all(),
         })
+
+@require_http_methods(['GET'])
+def download_as_zip(request, album_url):
+    """Download the photos of an album as a zipfile"""
+    album = get_object_or_404(Album, album_url=album_url)
+    photos = album.photos.all()
+
+    # Use an bytestream rather than a real file
+    temp_file = io.BytesIO()
+
+    # Add photos to the zipfile
+    with zipfile.ZipFile(temp_file, mode='w', compression=zipfile.ZIP_DEFLATED) as zip_file:
+        for number, photo in enumerate(photos):
+            path = os.path.join(settings.MEDIA_ROOT, photo.source.name)
+            name = str(number+1)
+            name += ' - {}.jpg'.format(photo.comment) if photo.comment else '.jpg'
+            zip_file.write(path, name)
+
+    # Serve the contents of the zipfile
+    file_size = temp_file.tell()
+    temp_file.seek(0)
+    response = HttpResponse(temp_file.getvalue(), content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename="{}.zip"'.format(album.game_name)
+    response['Content-Length'] = file_size
+    return response

@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^photo/$', views.create_photo),
     url(r'^photo/([^/]+/[^/]+)$', views.update_delete_photo),
     url(r'^album/([^/]+)/$', views.view_album),
+    url(r'^album/([^/]+)/download/$', views.download_as_zip),
     url(r'^admin/', include(admin.site.urls)),
 ]
 

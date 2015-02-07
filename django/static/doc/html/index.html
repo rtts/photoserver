@@ -129,6 +129,31 @@ the JSON keys <cite>albumId</cite> and <cite>albumUrl</cite> just like a
 </div>
 </dd></dl>
 
+<hr class="docutils" />
+<dl class="get">
+<dt id="get--album--albumUrl--download-">
+<tt class="descname">GET </tt><tt class="descname">/album/&lt;albumUrl&gt;/download/</tt><a class="headerlink" href="#get--album--albumUrl--download-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the photos of an album as a zipfile</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This API call does not require authentication.</p>
+</div>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/album/aSL9LEu68tAPQWVb8yx0gf4XfHqaOINa/download/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/zip</span>
+<span class="na">Content-Disposition</span><span class="o">:</span> <span class="l">attachment; filename=&quot;Game Name.zip&quot;</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">275502</span>
+
+&lt;raw zip data&gt;
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 <div class="section" id="creating-updating-and-deleting-photos">
 <h2>Creating, updating, and deleting photos<a class="headerlink" href="#creating-updating-and-deleting-photos" title="Permalink to this headline">¶</a></h2>

@@ -84,6 +84,33 @@ Creating and viewing albums
       <!doctype html>
       ...
 
+----------------------------------------------------------------------
+
+.. http:get:: /album/<albumUrl>/download/
+
+   Download the photos of an album as a zipfile
+
+   .. NOTE::
+      This API call does not require authentication.
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /album/aSL9LEu68tAPQWVb8yx0gf4XfHqaOINa/download/ HTTP/1.1
+      Host: example.com
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/zip
+      Content-Disposition: attachment; filename="Game Name.zip"
+      Content-Length: 275502
+
+      <raw zip data>
+
 Creating, updating, and deleting photos
 ---------------------------------------
 
