@@ -1,6 +1,6 @@
 ## Photo Server
 
-***A very simple and reliable Django photo server***
+***A simple and reliable Django photo server***
 
 ### Installation instructions
 
@@ -14,7 +14,7 @@
 
 ### Additional documentation
 
-#### UPDATE: The generated API documentation is now included in this repository. You can view it [here](https://rawgit.com/rtts/photoserver/master/django/static/doc/html/index.html).
+*** UPDATE: The generated API documentation is now included in this repository. You can view it [here](https://rawgit.com/rtts/photoserver/master/django/static/doc/html/index.html).***
 
 The photo server API calls are well-documented. To build the
 documentation will need the [Sphinx](http://sphinx-doc.org/)
