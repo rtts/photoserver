@@ -150,7 +150,8 @@ def download_as_zip(request, album_url):
         for number, photo in enumerate(photos):
             path = os.path.join(settings.MEDIA_ROOT, photo.source.name)
             name = str(number+1)
-            name += ' - {}.jpg'.format(photo.comment) if photo.comment else '.jpg'
+            #name += ' - {}.jpg'.format(photo.comment) if photo.comment else '.jpg'
+            name += '.jpg'
             zip_file.write(path, name)
 
     # Serve the contents of the zipfile
