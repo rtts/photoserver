@@ -11,6 +11,9 @@ def random_string(length):
     """Returns a random alphanumeric string"""
     return ''.join(random.choice(string.ascii_letters + string.digits) for x in range(length))
 
+def generate_album_url():
+    return random_string(ALBUM_URL_LENGTH)
+
 def photo_location(obj, filename):
     """Returns a photo's upload location"""
     return '/'.join([obj.album.album_id, random_string(PHOTO_FILENAME_LENGTH) + '.jpg'])
@@ -23,7 +26,7 @@ class Album(models.Model):
     partner_name = models.SlugField()
     game_id = models.IntegerField()
     album_id = models.CharField(max_length=255, blank=True)
-    album_url = models.CharField(max_length=255, default=random_string(ALBUM_URL_LENGTH))
+    album_url = models.CharField(max_length=255, default=generate_album_url)
 
     def nr_of_photos(self):
         """Returns the number of photos"""
