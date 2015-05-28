@@ -187,7 +187,7 @@ will be saved along with the photo.</p>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-  <span class="nt">&quot;photoUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;photoUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -197,7 +197,7 @@ will be saved along with the photo.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
 <li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; The photo has been successfully created and can
-be accessed at /photo/&lt;photoUrl&gt;/</li>
+be downloaded from /media/&lt;photoUrl&gt;/</li>
 <li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; The request was either malformed or didn&#8217;t contain
 the correct JSON keys. The exact error is included
 in the body of the response.</li>
@@ -210,8 +210,8 @@ in the body of the response.</li>
 
 <hr class="docutils" />
 <dl class="put">
-<dt id="put--photo--photoUrl--">
-<tt class="descname">PUT </tt><tt class="descname">/photo/&lt;photoUrl&gt;/</tt><a class="headerlink" href="#put--photo--photoUrl--" title="Permalink to this definition">¶</a></dt>
+<dt id="put--photo--photoUrl-">
+<tt class="descname">PUT </tt><tt class="descname">/photo/&lt;photoUrl&gt;</tt><a class="headerlink" href="#put--photo--photoUrl-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the comment on an existing photo</p>
 <p><strong>Example request</strong>:</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/photo/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
@@ -248,8 +248,8 @@ in the body of the response.</li>
 
 <hr class="docutils" />
 <dl class="delete">
-<dt id="delete--photo--photoUrl--">
-<tt class="descname">DELETE </tt><tt class="descname">/photo/&lt;photoUrl&gt;/</tt><a class="headerlink" href="#delete--photo--photoUrl--" title="Permalink to this definition">¶</a></dt>
+<dt id="delete--photo--photoUrl-">
+<tt class="descname">DELETE </tt><tt class="descname">/photo/&lt;photoUrl&gt;</tt><a class="headerlink" href="#delete--photo--photoUrl-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a photo</p>
 <p><strong>Example request</strong>:</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/photo/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>

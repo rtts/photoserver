@@ -147,11 +147,11 @@ Creating, updating, and deleting photos
       Content-Type: application/json
 
       {
-        "photoUrl": "/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg",
+        "photoUrl": "uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg",
       }
 
    :statuscode 200: The photo has been successfully created and can
-                    be accessed at /photo/<photoUrl>/
+                    be downloaded from /media/<photoUrl>/
 
    :statuscode 400: The request was either malformed or didn't contain
                     the correct JSON keys. The exact error is included
@@ -159,7 +159,7 @@ Creating, updating, and deleting photos
 
 ----------------------------------------------------------------------
 
-.. http:put:: /photo/<photoUrl>/
+.. http:put:: /photo/<photoUrl>
 
    Update the comment on an existing photo
 
@@ -193,7 +193,7 @@ Creating, updating, and deleting photos
 
 ----------------------------------------------------------------------
 
-.. http:delete:: /photo/<photoUrl>/
+.. http:delete:: /photo/<photoUrl>
 
    Delete a photo
 

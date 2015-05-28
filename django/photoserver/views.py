@@ -68,7 +68,7 @@ def create_photo(request):
     except KeyError as e:
         return HttpResponseBadRequest(ERROR_KEY.format(e))
     try:
-        decoded_jpg = base64.b64decode(data['jpgData'], validate=True)
+        decoded_jpg = base64.b64decode(data['jpgData'], validate=False)
     except Exception as e:
         return HttpResponseBadRequest(ERROR_BASE64.format(e))
 
@@ -87,7 +87,7 @@ def create_photo(request):
         photo.comment = data['comment']
     photo.save()
     return JsonResponse({
-        'photoUrl': photo.source.url,
+        'photoUrl': photo.source.name,
         })
 
 @csrf_exempt
