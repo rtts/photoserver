@@ -151,7 +151,7 @@ Creating, updating, and deleting photos
       }
 
    :statuscode 200: The photo has been successfully created and can
-                    be downloaded from /media/<photoUrl>/
+                    be downloaded from /media/<photoUrl>
 
    :statuscode 400: The request was either malformed or didn't contain
                     the correct JSON keys. The exact error is included
