@@ -19,6 +19,7 @@ from django.conf import settings
 from .utils import http_auth_required
 from .models import Album, Photo
 
+ENCODING = "utf-8"
 HTTP_AUTH_REALM = "Photoserver-API"
 ERROR_JSON = 'You are sending invalid JSON! The exact error is: "{}"'
 ERROR_KEY = 'The request doesn’t contain the required arguments. At least the following key is missing: {}'
@@ -33,7 +34,7 @@ def create_album(request):
     """Create a new photo album"""
 
     try:
-        data = json.loads(request.body.decode('utf-8'))
+        data = json.loads(request.body.decode(ENCODING))
     except ValueError as e:
         return HttpResponseBadRequest(ERROR_JSON.format(e))
 
@@ -59,7 +60,7 @@ def create_photo(request):
 
     # Cautiously extract and decode request data
     try:
-        data = json.loads(request.body.decode('utf-8'))
+        data = json.loads(request.body.decode(ENCODING))
     except ValueError as e:
         return HttpResponseBadRequest(ERROR_JSON.format(e))
     try:
@@ -103,7 +104,7 @@ def update_photo(request, photo_url):
     """Update the comment on an existing photo"""
 
     try:
-        data = json.loads(request.body.decode('utf-8'))
+        data = json.loads(request.body.decode(ENCODING))
     except ValueError as e:
         return HttpResponseBadRequest(ERROR_JSON.format(e))
     try:
