@@ -20,6 +20,7 @@ from .utils import http_auth_required
 from .models import Album, Photo
 
 ENCODING = "utf-8"
+FALLBACKENCODING = "latin-1"
 HTTP_AUTH_REALM = "Photoserver-API"
 ERROR_JSON = 'You are sending invalid JSON! The exact error is: "{}"'
 ERROR_KEY = 'The request doesn’t contain the required arguments. At least the following key is missing: {}'
@@ -36,7 +37,10 @@ def create_album(request):
     try:
         data = json.loads(request.body.decode(ENCODING))
     except ValueError as e:
-        return HttpResponseBadRequest(ERROR_JSON.format(e))
+        try:
+            data = json.loads(request.body.decode(FALLBACKENCODING))
+        except ValueError as e:	
+            return HttpResponseBadRequest(ERROR_JSON.format(e))
 
     try:
         album, is_new = Album.objects.get_or_create(
@@ -62,7 +66,10 @@ def create_photo(request):
     try:
         data = json.loads(request.body.decode(ENCODING))
     except ValueError as e:
-        return HttpResponseBadRequest(ERROR_JSON.format(e))
+        try:
+            data = json.loads(request.body.decode(FALLBACKENCODING))
+        except ValueError as e:
+            return HttpResponseBadRequest(ERROR_JSON.format(e))
     try:
         album = get_object_or_404(Album, album_id=data['albumId'])
         encoded_jpg = data['jpgData']
@@ -106,7 +113,10 @@ def update_photo(request, photo_url):
     try:
         data = json.loads(request.body.decode(ENCODING))
     except ValueError as e:
-        return HttpResponseBadRequest(ERROR_JSON.format(e))
+        try:
+            data = json.loads(request.body.decode(FALLBACKENCODING))
+        except ValueError as e:
+            return HttpResponseBadRequest(ERROR_JSON.format(e))
     try:
         comment = data['comment']
     except KeyError as e:
