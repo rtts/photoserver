@@ -39,15 +39,30 @@ def create_album(request):
     except ValueError as e:
         try:
             data = json.loads(request.body.decode(FALLBACKENCODING))
-        except ValueError as e:	
+        except ValueError as e:
             return HttpResponseBadRequest(ERROR_JSON.format(e))
 
     try:
-        album, is_new = Album.objects.get_or_create(
-            game_name = data['gameName'],
-            partner_name = data['partnerName'],
-            game_id = data['gameId'],
-        )
+        try:
+            album = Album.objects.get(
+                partner_name = data['partnerName'],
+                game_id = data['gameId'],
+            )
+            is_new = False
+            if album.game_name != data['gameName']:
+                return HttpResponse(
+                    "That album exists, but the name is different than the name you sent!",
+                    content_type="text/plain",
+                    status=412
+                )
+        except Album.DoesNotExist:
+            album = Album(
+                game_name = data['gameName'],
+                partner_name = data['partnerName'],
+                game_id = data['gameId'],
+            )
+            album.save()
+            is_new = True
     except KeyError as e:
         return HttpResponseBadRequest(ERROR_KEY.format(e))
 
