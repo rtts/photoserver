@@ -1,0 +1,15 @@
+#!/bin/bash
+
+. ~/.virtualenvs/photoserver/bin/activate
+export DJANGO_SETTINGS_MODULE=project.settings
+
+python -c '
+from django.conf import settings
+from photoserver.models import Album
+
+from datetime import datetime, timedelta
+outdated = Album.objects.filter(created__lte=datetime.now()-timedelta(days=365))
+for album in outdated:
+    albumdir = os.path.join(settings.MEDIA_ROOT, album.album_id)
+    print(albumdir)
+'
