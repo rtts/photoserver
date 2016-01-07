@@ -15,8 +15,7 @@ django.setup()
 outdated = Album.objects.filter(created__lte=datetime.now()-timedelta(days=365))
 for album in outdated:
     albumdir = os.path.join(settings.MEDIA_ROOT, album.album_id)
-    print(albumdir)
-
-    # The following command removes the directory
+    print("Removing album %s including the directory %s" % (album.album_id, albumdir))
+    album.delete()
     os.system("rm -r " + albumdir)
 '
