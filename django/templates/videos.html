@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ game_name }} - Video’s</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if lt IE 9]>
+      <script src="/static/html5.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/video.css">
+    <link rel="stylesheet" href="/static/magnific-popup.css">
+  </head>
+  <body>
+
+    <header>
+      <h1>De video’s van {{ game_name }}</h1>
+    </header>
+
+    <main>
+      <div id="gallery">
+        {% for item in items %}
+          <div class="video">
+            <h2>{{forloop.counter}}. {{item.title}}</h2>
+            <video width="640" height="480" src="{{item.source.url}}" controls></video>
+            <p>{{item.comment}}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </main>
+
+  </body>
+</html>

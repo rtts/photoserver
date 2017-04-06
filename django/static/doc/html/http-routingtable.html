@@ -6,9 +6,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>HTTP Routing Table &mdash; Photo Server 0.1 documentation</title>
+    <title>HTTP Routing Table &#8212; Photo Server 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -17,13 +17,15 @@
         VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Photo Server 0.1 documentation" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
  
 
     <script type="text/javascript">
@@ -32,8 +34,8 @@
 
 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,59 +44,78 @@
         <li class="right" >
           <a href="#" title="HTTP Routing Table"
              >routing table</a> |</li>
-        <li><a href="index.html">Photo Server 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Photo Server 0.1 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
 
    <h1>HTTP Routing Table</h1>
 
    <div class="modindex-jumpbox">
    <a href="#cap-/album"><strong>/album</strong></a> | 
-   <a href="#cap-/photo"><strong>/photo</strong></a>
+   <a href="#cap-/photo"><strong>/photo</strong></a> | 
+   <a href="#cap-/video"><strong>/video</strong></a>
    </div>
 
-   <table class="indextable modindextable" cellspacing="0" cellpadding="2">
-     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+   <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-/album"><td></td><td>
        <strong>/album</strong></td><td></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="index.html#get--album--albumUrl--"><tt class="xref">GET /album/&lt;albumUrl&gt;/</tt></a></td><td>
+       <a href="index.html#get--album--albumUrl--"><code class="xref">GET /album/&lt;albumUrl&gt;/</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="index.html#get--album--albumUrl--download-"><tt class="xref">GET /album/&lt;albumUrl&gt;/download/</tt></a></td><td>
+       <a href="index.html#get--album--albumUrl--download-"><code class="xref">GET /album/&lt;albumUrl&gt;/download/</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="index.html#post--album-"><tt class="xref">POST /album/</tt></a></td><td>
+       <a href="index.html#post--album-"><code class="xref">POST /album/</code></a></td><td>
        <em></em></td></tr>
-     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-/photo"><td></td><td>
        <strong>/photo</strong></td><td></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="index.html#post--photo-"><tt class="xref">POST /photo/</tt></a></td><td>
+       <a href="index.html#post--photo-"><code class="xref">POST /photo/</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="index.html#put--photo--photoUrl-"><tt class="xref">PUT /photo/&lt;photoUrl&gt;</tt></a></td><td>
+       <a href="index.html#put--photo--photoUrl-"><code class="xref">PUT /photo/&lt;photoUrl&gt;</code></a></td><td>
        <em></em></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="index.html#delete--photo--photoUrl-"><tt class="xref">DELETE /photo/&lt;photoUrl&gt;</tt></a></td><td>
+       <a href="index.html#delete--photo--photoUrl-"><code class="xref">DELETE /photo/&lt;photoUrl&gt;</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/video"><td></td><td>
+       <strong>/video</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--video-"><code class="xref">POST /video/</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--video--videoUrl-"><code class="xref">PUT /video/&lt;videoUrl&gt;</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--video--videoUrl-"><code class="xref">DELETE /video/&lt;videoUrl&gt;</code></a></td><td>
        <em></em></td></tr>
    </table>
 
@@ -102,26 +123,23 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -130,11 +148,11 @@
         <li class="right" >
           <a href="#" title="HTTP Routing Table"
              >routing table</a> |</li>
-        <li><a href="index.html">Photo Server 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Photo Server 0.1 documentation</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
     </div>
   </body>
 </html>

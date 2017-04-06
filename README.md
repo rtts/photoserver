@@ -1,5 +1,11 @@
 ## Photo Server
 
+### Release notes
+
+v0.2: Added functionality to upload videos as well as photos. Check the [documentation](https://rawgit.com/rtts/photoserver/master/django/static/doc/html/index.html) for the appropriate API calls.
+
+v0.1: First version
+
 ***A simple and reliable Django photo server***
 
 ### Installation instructions

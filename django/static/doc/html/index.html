@@ -6,9 +6,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Photo Server API documentation &mdash; Photo Server 0.1 documentation</title>
+    <title>Photo Server API documentation &#8212; Photo Server 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -17,16 +17,18 @@
         VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Photo Server 0.1 documentation" href="#" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -35,14 +37,14 @@
         <li class="right" >
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
-        <li><a href="#">Photo Server 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Photo Server 0.1 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="photo-server-api-documentation">
 <h1>Photo Server API documentation<a class="headerlink" href="#photo-server-api-documentation" title="Permalink to this headline">¶</a></h1>
@@ -53,17 +55,17 @@ permissions, and photo albums. Additionally, the Photo Server provides
 a number of API calls that are documented on this page.</p>
 <p>All requests that potentially modify data must include <a class="reference external" href="https://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic
 access authentication</a>
-credentials, by adding the HTTP header <tt class="docutils literal"><span class="pre">Authorization:</span></tt> following by
-the string <tt class="docutils literal"><span class="pre">Basic</span></tt> and a base64-encoded <tt class="docutils literal"><span class="pre">username:password</span></tt>
+credentials, by adding the HTTP header <code class="docutils literal"><span class="pre">Authorization:</span></code> following by
+the string <code class="docutils literal"><span class="pre">Basic</span></code> and a base64-encoded <code class="docutils literal"><span class="pre">username:password</span></code>
 string. The users can be managed through the admin interface.</p>
 <div class="section" id="creating-and-viewing-albums">
 <h2>Creating and viewing albums<a class="headerlink" href="#creating-and-viewing-albums" title="Permalink to this headline">¶</a></h2>
 <dl class="post">
 <dt id="post--album-">
-<tt class="descname">POST </tt><tt class="descname">/album/</tt><a class="headerlink" href="#post--album-" title="Permalink to this definition">¶</a></dt>
+<code class="descname">POST </code><code class="descname">/album/</code><a class="headerlink" href="#post--album-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new photo album</p>
 <p><strong>Example request</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/album/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/album/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -76,7 +78,7 @@ string. The users can be managed through the admin interface.</p>
 </pre></div>
 </div>
 <p><strong>Example response</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
@@ -108,19 +110,19 @@ the JSON keys <cite>albumId</cite> and <cite>albumUrl</cite> just like a
 <hr class="docutils" />
 <dl class="get">
 <dt id="get--album--albumUrl--">
-<tt class="descname">GET </tt><tt class="descname">/album/&lt;albumUrl&gt;/</tt><a class="headerlink" href="#get--album--albumUrl--" title="Permalink to this definition">¶</a></dt>
+<code class="descname">GET </code><code class="descname">/album/&lt;albumUrl&gt;/</code><a class="headerlink" href="#get--album--albumUrl--" title="Permalink to this definition">¶</a></dt>
 <dd><p>View an existing photo album in a web browser</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This API call does not require authentication.</p>
 </div>
 <p><strong>Example request</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/album/aSL9LEu68tAPQWVb8yx0gf4XfHqaOINa/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/album/aSL9LEu68tAPQWVb8yx0gf4XfHqaOINa/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
 </pre></div>
 </div>
 <p><strong>Example response</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=utf-8</span>
 
 <span class="cp">&lt;!doctype html&gt;</span>
@@ -132,19 +134,19 @@ the JSON keys <cite>albumId</cite> and <cite>albumUrl</cite> just like a
 <hr class="docutils" />
 <dl class="get">
 <dt id="get--album--albumUrl--download-">
-<tt class="descname">GET </tt><tt class="descname">/album/&lt;albumUrl&gt;/download/</tt><a class="headerlink" href="#get--album--albumUrl--download-" title="Permalink to this definition">¶</a></dt>
+<code class="descname">GET </code><code class="descname">/album/&lt;albumUrl&gt;/download/</code><a class="headerlink" href="#get--album--albumUrl--download-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download the photos of an album as a zipfile</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This API call does not require authentication.</p>
 </div>
 <p><strong>Example request</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/album/aSL9LEu68tAPQWVb8yx0gf4XfHqaOINa/download/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/album/aSL9LEu68tAPQWVb8yx0gf4XfHqaOINa/download/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
 </pre></div>
 </div>
 <p><strong>Example response</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/zip</span>
 <span class="na">Content-Disposition</span><span class="o">:</span> <span class="l">attachment; filename=&quot;Game Name.zip&quot;</span>
 <span class="na">Content-Length</span><span class="o">:</span> <span class="l">275502</span>
@@ -159,10 +161,10 @@ the JSON keys <cite>albumId</cite> and <cite>albumUrl</cite> just like a
 <h2>Creating, updating, and deleting photos<a class="headerlink" href="#creating-updating-and-deleting-photos" title="Permalink to this headline">¶</a></h2>
 <dl class="post">
 <dt id="post--photo-">
-<tt class="descname">POST </tt><tt class="descname">/photo/</tt><a class="headerlink" href="#post--photo-" title="Permalink to this definition">¶</a></dt>
+<code class="descname">POST </code><code class="descname">/photo/</code><a class="headerlink" href="#post--photo-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a new photo to an album</p>
 <p><strong>Example request</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/photo/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/photo/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -183,7 +185,7 @@ will be saved along with the photo.</p>
 <p class="last">The submitted JPG data will be verified to contain a valid image.</p>
 </div>
 <p><strong>Example response</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
@@ -211,10 +213,10 @@ in the body of the response.</li>
 <hr class="docutils" />
 <dl class="put">
 <dt id="put--photo--photoUrl-">
-<tt class="descname">PUT </tt><tt class="descname">/photo/&lt;photoUrl&gt;</tt><a class="headerlink" href="#put--photo--photoUrl-" title="Permalink to this definition">¶</a></dt>
+<code class="descname">PUT </code><code class="descname">/photo/&lt;photoUrl&gt;</code><a class="headerlink" href="#put--photo--photoUrl-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the comment on an existing photo</p>
 <p><strong>Example request</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/photo/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">PUT</span> <span class="nn">/photo/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
@@ -225,7 +227,7 @@ in the body of the response.</li>
 </pre></div>
 </div>
 <p><strong>Example response</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -249,16 +251,16 @@ in the body of the response.</li>
 <hr class="docutils" />
 <dl class="delete">
 <dt id="delete--photo--photoUrl-">
-<tt class="descname">DELETE </tt><tt class="descname">/photo/&lt;photoUrl&gt;</tt><a class="headerlink" href="#delete--photo--photoUrl-" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DELETE </code><code class="descname">/photo/&lt;photoUrl&gt;</code><a class="headerlink" href="#delete--photo--photoUrl-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a photo</p>
 <p><strong>Example request</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/photo/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/photo/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
 <span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span>
 </pre></div>
 </div>
 <p><strong>Example response</strong>:</p>
-<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -276,46 +278,165 @@ in the body of the response.</li>
 </dd></dl>
 
 </div>
+<div class="section" id="creating-updating-and-deleting-videos">
+<h2>Creating, updating, and deleting videos<a class="headerlink" href="#creating-updating-and-deleting-videos" title="Permalink to this headline">¶</a></h2>
+<dl class="post">
+<dt id="post--video-">
+<code class="descname">POST </code><code class="descname">/video/</code><a class="headerlink" href="#post--video-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new video to an album</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/video/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;albumId&quot;</span><span class="p">:</span> <span class="s2">&quot;uitjes870&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;filetype&quot;</span><span class="p">:</span> <span class="s2">&quot;mp4&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;videoData&quot;</span><span class="p">:</span> <span class="s2">&quot;/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////2wBDAf//////////////////////////////////////////////////////////////////////////////////////wgARCAAKAAoDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/2gAMAwEAAhADEAAAAZNAg//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEAAQUCH//EABQRAQAAAAAAAAAAAAAAAAAAACD/2gAIAQMBAT8BH//EABQRAQAAAAAAAAAAAAAAAAAAACD/2gAIAQIBAT8BH//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEABj8CH//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEAAT8hH//aAAwDAQACAAMAAAAQ2/8A/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPxAf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPxAf/8QAFBABAAAAAAAAAAAAAAAAAAAAIP/aAAgBAQABPxAf/9k=&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The request may optionally contain the keys &#8220;title&#8221; and/or &#8220;comment&#8221;, which
+will be saved along with the video.</p>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;videoUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.mp4&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; The video has been successfully created and can
+be downloaded from /media/&lt;videoUrl&gt;</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; The request was either malformed or didn&#8217;t contain
+the correct JSON keys. The exact error is included
+in the body of the response.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="put">
+<dt id="put--video--videoUrl-">
+<code class="descname">PUT </code><code class="descname">/video/&lt;videoUrl&gt;</code><a class="headerlink" href="#put--video--videoUrl-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the attributes of an existing video</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">PUT</span> <span class="nn">/video/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.jpg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;HELP&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;Two kittens on an air mattress approaching a waterfall&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; The video was successfully updated with the new
+comment.</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; The request was either malformed or didn&#8217;t contain
+the correct JSON keys. The exact error is included
+in the body of the response.</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> &#8211; The video could not be found.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="delete">
+<dt id="delete--video--videoUrl-">
+<code class="descname">DELETE </code><code class="descname">/video/&lt;videoUrl&gt;</code><a class="headerlink" href="#delete--video--videoUrl-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a video</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/video/uitjes870/e4mqPHxtvwzSmXfSzz8r3mj0HrWQM8Or.mp4</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; The video was successfully deleted.</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> &#8211; The video could not be found.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Photo Server API documentation</a><ul>
 <li><a class="reference internal" href="#creating-and-viewing-albums">Creating and viewing albums</a></li>
 <li><a class="reference internal" href="#creating-updating-and-deleting-photos">Creating, updating, and deleting photos</a></li>
+<li><a class="reference internal" href="#creating-updating-and-deleting-videos">Creating, updating, and deleting videos</a></li>
 </ul>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -324,11 +445,11 @@ in the body of the response.</li>
         <li class="right" >
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
-        <li><a href="#">Photo Server 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">Photo Server 0.1 documentation</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
     </div>
   </body>
 </html>

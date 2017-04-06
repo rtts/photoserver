@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 200;
+  src: url("SourceSansPro-ExtraLight.woff") format("woff"); }
+body, html {
+  margin: 0;
+  padding: 0 0.5em;
+  font-family: 'Source Sans Pro', sans-serif;
+  background: black;
+  color: white; }
+
+h1, h2, h3 {
+  font-weight: 200;
+  letter-spacing: 3px;
+  font-variant: small-caps; }
+
+div.video {
+  border-top: 1px solid white;
+  margin: 1em 0;
+  padding: 1em 0; }
+
+video {
+  border: 2px solid white; }
+
+/*# sourceMappingURL=video.css.map */

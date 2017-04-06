@@ -115,12 +115,62 @@ def create_photo(request):
 
 @csrf_exempt
 @http_auth_required(realm=HTTP_AUTH_REALM)
+@require_http_methods(['POST'])
+def create_video(request):
+    """Add a new video to an album"""
+
+    # Cautiously extract and decode request data
+    try:
+        data = json.loads(request.body.decode(ENCODING))
+    except ValueError as e:
+        try:
+            data = json.loads(request.body.decode(FALLBACKENCODING))
+        except ValueError as e:
+            return HttpResponseBadRequest(ERROR_JSON.format(e))
+    try:
+        album = get_object_or_404(Album, album_id=data['albumId'])
+        filetype = data['filetype']
+        encoded_video = data['videoData']
+    except KeyError as e:
+        return HttpResponseBadRequest(ERROR_KEY.format(e))
+    try:
+        decoded_video = base64.b64decode(data['videoData'], validate=False)
+    except Exception as e:
+        return HttpResponseBadRequest(ERROR_BASE64.format(e))
+
+    # Create the video object
+    video = Video(
+        album = album,
+        source = ContentFile(decoded_video, 'ignoredfilename.' + filetype),
+    )
+
+    # Save video to database and return successfully
+    if 'title' in data:
+        video.title = data['title']
+    if 'comment' in data:
+        video.comment = data['comment']
+    video.save()
+    return JsonResponse({
+        'videoUrl': video.source.name,
+    })
+
+@csrf_exempt
+@http_auth_required(realm=HTTP_AUTH_REALM)
 @require_http_methods(['PUT', 'DELETE'])
 def update_delete_photo(request, photo_url):
     if request.method == 'PUT':
         return update_photo(request, photo_url)
     elif request.method == 'DELETE':
         return delete_photo(request, photo_url)
+
+@csrf_exempt
+@http_auth_required(realm=HTTP_AUTH_REALM)
+@require_http_methods(['PUT', 'DELETE'])
+def update_delete_video(request, video_url):
+    if request.method == 'PUT':
+        return update_video(request, video_url)
+    elif request.method == 'DELETE':
+        return delete_video(request, video_url)
 
 def update_photo(request, photo_url):
     """Update the comment on an existing photo"""
@@ -143,11 +193,51 @@ def update_photo(request, photo_url):
 
     return HttpResponse()
 
+def update_video(request, video_url):
+    """Update the title and/or comment on an existing video"""
+
+    try:
+        data = json.loads(request.body.decode(ENCODING))
+    except ValueError as e:
+        try:
+            data = json.loads(request.body.decode(FALLBACKENCODING))
+        except ValueError as e:
+            return HttpResponseBadRequest(ERROR_JSON.format(e))
+    try:
+        title = data['title']
+    except KeyError as e:
+        title = None
+    try:
+        comment = data['comment']
+    except KeyError as e:
+        comment = None
+
+    if not (title or comment):
+        return HttpResponseBadRequest(ERROR_KEY.format('title and/or comment'))
+
+    video = get_object_or_404(Video, source=video_url)
+
+    if title:
+        video.title = title
+    if comment:
+        video.comment = comment
+    video.save()
+
+    return HttpResponse()
+
 def delete_photo(request, photo_url):
     """Delete a photo"""
 
     photo = get_object_or_404(Photo, source=photo_url)
     photo.delete()
+
+    return HttpResponse()
+
+def delete_video(request, video_url):
+    """Delete a video"""
+
+    video = get_object_or_404(Video, source=video_url)
+    video.delete()
 
     return HttpResponse()
 
@@ -160,6 +250,17 @@ def view_album(request, album_url):
     return render(request, 'index.html', {
         'game_name': album.game_name,
         'items': album.photos.all(),
+        })
+
+@require_http_methods(['GET'])
+def view_videos(request, album_url):
+    """View an existing video album in a web browser"""
+
+    album = get_object_or_404(Album, album_url=album_url)
+
+    return render(request, 'videos.html', {
+        'game_name': album.game_name,
+        'items': album.videos.all(),
         })
 
 @require_http_methods(['GET'])

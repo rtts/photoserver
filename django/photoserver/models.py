@@ -14,12 +14,8 @@ def random_string(length):
 def generate_album_url():
     return random_string(ALBUM_URL_LENGTH)
 
-def photo_location(obj, filename):
-    """Returns a photo's upload location"""
-    return '/'.join([obj.album.album_id, random_string(PHOTO_FILENAME_LENGTH) + '.jpg'])
-
 class Album(models.Model):
-    """A photo album"""
+    """A photo and/or video album"""
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     game_name = models.CharField(max_length=255)
@@ -31,6 +27,10 @@ class Album(models.Model):
     def nr_of_photos(self):
         """Returns the number of photos"""
         return self.photos.count()
+
+    def nr_of_videos(self):
+        """Returns the number of videos"""
+        return self.videos.count()
 
     def get_absolute_url(self):
         """Returns the album URL"""
@@ -47,6 +47,10 @@ class Album(models.Model):
     class Meta:
         unique_together = ('partner_name', 'game_id')
 
+def photo_location(obj, filename):
+    """Returns a photo's upload location"""
+    return '/'.join([obj.album.album_id, random_string(PHOTO_FILENAME_LENGTH) + '.jpg'])
+
 class Photo(models.Model):
     """A photo"""
     created = models.DateTimeField(auto_now_add=True)
@@ -54,6 +58,26 @@ class Photo(models.Model):
     source = models.ImageField(upload_to=photo_location)
     comment = models.CharField(max_length=255, blank=True)
     album = models.ForeignKey(Album, related_name='photos')
+
+    def __str__(self):
+        return self.source.url
+
+def extension(filename):
+    """Returns a filename's extension"""
+    return filename.split('.')[-1]
+
+def video_location(obj, filename):
+    """Returns a video's upload location"""
+    return '/'.join([obj.album.album_id, random_string(PHOTO_FILENAME_LENGTH) + '.' + extension(filename)])
+
+class Video(models.Model):
+    """A video"""
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    source = models.FileField(upload_to=video_location)
+    title = models.CharField(max_length=255, blank=True)
+    comment = models.CharField(max_length=255, blank=True)
+    album = models.ForeignKey(Album, related_name='videos')
 
     def __str__(self):
         return self.source.url
