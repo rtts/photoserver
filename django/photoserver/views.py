@@ -17,7 +17,7 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 
 from .utils import http_auth_required
-from .models import Album, Photo
+from .models import Album, Photo, Video
 
 ENCODING = "utf-8"
 FALLBACKENCODING = "latin-1"
